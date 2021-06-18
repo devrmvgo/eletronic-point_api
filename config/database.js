@@ -1,12 +1,12 @@
 module.exports = {
-  // Credencias do bando de dados
+  // Database credentials
   HOST: "localhost",
   USER: "postgres",
   PASSWORD: "docker",
   DB: "eletronic-point_database",
   dialect: "postgres",
 
-  // Configuração do pool de conexão Sequelize
+  // Pool settings of Sequelize connection
   pool: {
     max: 5,
     min: 0,

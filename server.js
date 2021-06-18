@@ -3,24 +3,24 @@ const cors = require("cors");
 
 const app = express();
 
-// Libera acesso a todos os dominios externos
+// Allows access to all external domains
 app.use(cors());
-// Permite o envio de dados na requisição com formato json
+// Allows sending data in the request with json format
 app.use(express.json());
 
-// Acesso aos models e conexão sequelize
+// Models and Sequelize conecction access
 const db = require("./app/models");
 db.sequelize.sync();
 
-// Rota raiz
+// Home route
 app.get("/", (req, res) => {
   res.json({ message: "welcome to eletronmic point api" });
 });
 
-// Rotas da aplicação
+// App routes
 app.use('/', require("./start/routes.js"));
 
-// Altera porta da aplicação
+// Changes application port
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`app is running on port ${PORT}.`);

@@ -1,16 +1,44 @@
 const db = require("../models");
 const Employee = db.employees;
 
+const validateEmployee = (req) => {
+  if (!req.body.name) {
+    return "O nome do Colaborador é obrigatório!";
+  } else if (!req.body.email) {
+    return "O email do Colaborador é obrigatório!";
+  } else if (!req.body.cpf) {
+    return "O CPF do Colaborador é obrigatório!";
+  } else if (!req.body.skills) {
+    return "As habilidades do Colaborador são obrigatórias!";
+  }
+
+  return false;
+}
+
 module.exports = {
+  // Create and Save a new Employee
   async create(req, res) {
-    if (!req.body.name) {
+
+    // Validation of required fields
+    const invalid = validateEmployee(req);
+
+    if (invalid) {
       res.status(400).send({
-        message: "Content can not be empty!"
+        error: invalid
       });
-      return;
+
+      return
     }
 
-    // Create a Employee
+    // Validation of unique CPF
+    if (await Employee.findOne({ where: { cpf: req.body.cpf } })) {
+      res.status(400).send({
+        error: "Colaborador com o CPF informado já foi cadastrado!"
+      });
+
+      return
+    }
+
     const employee = {
       name: req.body.name,
       email: req.body.email,
@@ -19,7 +47,6 @@ module.exports = {
       skills: req.body.skills,
     };
 
-    // Save Employee in the database
     Employee.create(employee)
       .then(data => {
         res.send(data);
@@ -27,12 +54,13 @@ module.exports = {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Employee."
+            err.message || "Ocorreu algum erro ao cadastrar o Colaborador."
         });
 
       });
   },
 
+  // Find all Employees from the database
   async findAll(req, res) {
     Employee.findAll()
       .then(data => {
@@ -41,11 +69,12 @@ module.exports = {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Oocorreu algum erro ao buscar os Colaboradores."
         });
       });
   },
 
+  // Find one Employe by id by the id in the request
   async findOne(req, res) {
     const id = req.params.id;
 
@@ -55,13 +84,26 @@ module.exports = {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Erro ao buscao Colaborador com id=" + id
         });
       });
   },
 
+
+  // Update a Employee by the id in the request
   async update(req, res) {
     const id = req.params.id;
+
+    // Validation of required fields
+    const invalid = validateEmployee(req);
+
+    if (invalid) {
+      res.status(400).send({
+        error: invalid
+      });
+
+      return
+    }
 
     Employee.update(req.body, {
       where: { id: id }
@@ -69,21 +111,22 @@ module.exports = {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Employee was updated successfully."
+            message: "Colaborador atualizado com sucesso."
           });
         } else {
           res.send({
-            message: `Cannot update Employee with id=${id}. Maybe Employee was not found or req.body is empty!`
+            message: `Não é possível atualizar o Colaborador com id=${id}. Talvez o Colaborador não tenha sido encontrado ou req.body está em branco!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Employee with id=" + id
+          message: "Erro ao atualiza Colaborador com id=" + id
         });
       });
   },
 
+  // Delete a Employee with the specified id in the request
   async delete(req, res) {
     const id = req.params.id;
 
@@ -93,17 +136,17 @@ module.exports = {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Employee was deleted successfully!"
+            message: "O Colaborador foi removido com sucesso."
           });
         } else {
           res.send({
-            message: `Cannot delete Employee with id=${id}. Maybe Employee was not found!`
+            message: `Não é possível apagar o Colaborador com id=${id}. Talvez o Colaborador não tenha sido encontrado!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Employee with id=" + id
+          message: "Não foi possível excluir o Colaborador com id" + id
         });
       });
   },
