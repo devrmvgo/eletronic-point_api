@@ -8,6 +8,10 @@ app.use(cors());
 // Permite o envio de dados na requisição com formato json
 app.use(express.json());
 
+// Acesso aos models e conexão sequelize
+const db = require("./app/models");
+db.sequelize.sync();
+
 // Rota raiz
 app.get("/", (req, res) => {
   res.json({ message: "welcome to eletronmic point api" });
