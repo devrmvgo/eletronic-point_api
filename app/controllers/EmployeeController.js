@@ -62,7 +62,11 @@ module.exports = {
 
   // Find all Employees from the database
   async findAll(req, res) {
-    Employee.findAll()
+    Employee.findAll({
+      order: [
+        ['name', 'ASC'],
+      ]
+    })
       .then(data => {
         res.send(data);
       })
