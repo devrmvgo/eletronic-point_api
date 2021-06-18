@@ -1,0 +1,22 @@
+{
+  "name": "eletronic-point_api",
+  "version": "1.0.0",
+  "description": "api for managing employees in the point system electronic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felipealp/felipealp-eletronic-point_api.git"
+  },
+  "author": "Luiz Felipe Alves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felipealp/felipealp-eletronic-point_api/issues"
+  },
+  "homepage": "https://github.com/felipealp/felipealp-eletronic-point_api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
