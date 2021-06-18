@@ -8,10 +8,10 @@ routes.post("/employees", EmployeeController.create);
 // Retrieve all Employees
 routes.get("/employees", EmployeeController.findAll);
 // Retrieve a single Employee with id
-routes.get("/:id", EmployeeController.findOne);
+routes.get("/employees/:id", EmployeeController.findOne);
 // Update a Employee with id
-routes.put("/:id", EmployeeController.update);
+routes.put("/employees/:id", EmployeeController.update);
 // Delete a Employee with id
-routes.delete("/:id", EmployeeController.delete);
+routes.delete("/employees/:id", EmployeeController.delete);
 
 module.exports = routes;
