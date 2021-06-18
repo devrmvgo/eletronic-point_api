@@ -9,27 +9,27 @@ module.exports = (Sequelize, DataType) => {
     },
 
     name: {
-      type: Sequelize.STRING,
+      type: DataType.STRING,
       allowNull: false
     },
 
     email: {
-      type: Sequelize.STRING,
+      type: DataType.STRING,
       allowNull: false
     },
 
     cpf: {
-      type: Sequelize.STRING,
+      type: DataType.STRING,
       allowNull: false,
       unique: true
     },
 
     phone: {
-      type: Sequelize.STRING
+      type: DataType.STRING
     },
 
     skills: {
-      type: Sequelize.JSON,
+      type: DataType.JSON,
       allowNull: false
     },
 

@@ -17,6 +17,9 @@ app.get("/", (req, res) => {
   res.json({ message: "welcome to eletronmic point api" });
 });
 
+// Rotas
+app.use('/', require("./start/routes.js"));
+
 // Altera porta da aplicação
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
