@@ -8,6 +8,9 @@ app.use(cors());
 // Allows sending data in the request with json format
 app.use(express.json());
 
+// Environment variables
+require('dotenv/config');
+
 // Models and Sequelize conecction access
 const db = require("./app/models");
 db.sequelize.sync();
