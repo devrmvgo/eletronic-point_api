@@ -78,11 +78,26 @@ module.exports = {
       });
   },
 
-  // Find one Employe by id by the id in the request
+  // Find one Employe by name by the params the request
+  async findOneByName(req, res) {
+    const name = req.params.name;
+
+    Employee.findOne({ where: { name } })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Erro ao buscao Colaborador com nome=" + name
+        });
+      });
+  },
+
+  // Find one Employe by id by the params in the request
   async findOne(req, res) {
     const id = req.params.id;
 
-    Employee.findByPk(id)
+    Employee.findOne(id)
       .then(data => {
         res.send(data);
       })
@@ -93,6 +108,30 @@ module.exports = {
       });
   },
 
+  // Validate a Employee by the id in the request
+  async validate(req, res) {
+    const id = req.params.id;
+
+    Employee.update({ valid: req.body.valid }, {
+      where: { id: id }
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: "Validação de Colaborador feita com sucesso."
+          });
+        } else {
+          res.send({
+            message: `Não é possível fazer a validação do Colaborador com id=${id}. Talvez o Colaborador não tenha sido encontrado ou req.body está em branco!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Erro ao fazer a validação do Colaborador com id=" + id
+        });
+      });
+  },
 
   // Update a Employee by the id in the request
   async update(req, res) {
@@ -125,7 +164,7 @@ module.exports = {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Erro ao atualiza Colaborador com id=" + id
+          message: "Erro ao atualizar Colaborador com id=" + id
         });
       });
   },

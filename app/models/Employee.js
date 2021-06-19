@@ -33,6 +33,10 @@ module.exports = (Sequelize, DataType) => {
       allowNull: false
     },
 
+    valid: {
+      type: DataType.BOOLEAN
+    },
+
   });
 
   return Employee;
