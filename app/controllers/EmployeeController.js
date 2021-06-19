@@ -82,7 +82,7 @@ module.exports = {
   async findOneByName(req, res) {
     const name = req.params.name;
 
-    Employee.findOne({ where: { name: name } })
+    Employee.findOne({ where: { name } })
       .then(data => {
         res.send(data);
       })

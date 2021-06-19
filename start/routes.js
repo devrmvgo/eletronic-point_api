@@ -8,7 +8,7 @@ routes.post("/employees", EmployeeController.create);
 // Retrieve all Employees
 routes.get("/employees", EmployeeController.findAll);
 // Retrieve a single Employee with name
-routes.get("/employees/:name", EmployeeController.findOne);
+routes.get("/employees/:name", EmployeeController.findOneByName);
 // Retrieve a single Employee with id
 routes.get("/employee/:id", EmployeeController.findOne);
 // Retrieve a single Employee with id
