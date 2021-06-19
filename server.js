@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 });
 
 // App routes
-app.use('/', require("./start/routes.js"));
+app.use('/api', require("./start/routes.js"));
 
 // Changes application port
 const PORT = process.env.PORT || 3001;

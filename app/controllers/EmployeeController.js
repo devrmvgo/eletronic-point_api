@@ -78,11 +78,26 @@ module.exports = {
       });
   },
 
-  // Find one Employe by id by the id in the request
+  // Find one Employe by name by the params the request
+  async findOneByName(req, res) {
+    const name = req.params.name;
+
+    Employee.findOne({ where: { name: name } })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Erro ao buscao Colaborador com nome=" + name
+        });
+      });
+  },
+
+  // Find one Employe by id by the params in the request
   async findOne(req, res) {
     const id = req.params.id;
 
-    Employee.findByPk(id)
+    Employee.findOne(id)
       .then(data => {
         res.send(data);
       })
@@ -92,7 +107,6 @@ module.exports = {
         });
       });
   },
-
 
   // Update a Employee by the id in the request
   async update(req, res) {
