@@ -108,6 +108,31 @@ module.exports = {
       });
   },
 
+  // Validate a Employee by the id in the request
+  async validate(req, res) {
+    const id = req.params.id;
+
+    Employee.update({ valid: req.body.valid }, {
+      where: { id: id }
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: "Validação de Colaborador feita com sucesso."
+          });
+        } else {
+          res.send({
+            message: `Não é possível fazer a validação do Colaborador com id=${id}. Talvez o Colaborador não tenha sido encontrado ou req.body está em branco!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Erro ao fazer a validação do Colaborador com id=" + id
+        });
+      });
+  },
+
   // Update a Employee by the id in the request
   async update(req, res) {
     const id = req.params.id;
@@ -139,7 +164,7 @@ module.exports = {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Erro ao atualiza Colaborador com id=" + id
+          message: "Erro ao atualizar Colaborador com id=" + id
         });
       });
   },
